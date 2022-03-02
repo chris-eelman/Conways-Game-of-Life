@@ -1,0 +1,33 @@
+.center{
+  position: absolute;
+  top:10%;
+  left: 50%;
+  transform: translate(-50% , -10%)
+}
+
+.startButton{
+    background-color: #07720a;
+    width:400px;
+    border-radius: 8px;
+    color: #FFFFFF;
+
+}
+
+.stopButton{
+    background-color: #851608;
+    width:400px;
+    border-radius: 8px;
+    color: #FFFFFF;
+}
+
+.glider{
+    background-color: #c3ccff;
+}
+
+.randomSeed{
+    background-color: #dbdeeb;
+}
+
+.pulsar{
+    background-color: #ffa673;
+}
