@@ -1,301 +1,64 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>GOL</title>
+    <title>Conway's Game Of Life - Christopher Eelman</title>
     <meta charset="utf-8" />
     <meta name="author" content="Christopher Eelman"/>
-    <meta name="date" content="DATE"/>
-    <meta name="description" content="GAME OF LIFE"/>
+    <meta name="date" content="March 1, 2022"/>
+    <meta name="description"
+    content="My take on conway's game of life with some cool added features such as overlapping borders, 
+    pre-set patterns, random colors feature, and random seed generation with 30% probability of live cells"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script type="text/javascript">
- /*
-        var grid = [
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 1, 1, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0]
-        ];
-        
-
-        var size = 8;
-        */
-        var size = 50;
-        var grid = new Array(size);
-
-        function generateRandomSeed(){
-            // Loop to create 2D array using 1D array
-            for (var i = 0; i < grid.length; i++) {
-                grid[i] = new Array();
-            }
-        
-            // Loop to initialize 2D array elements
-            for (var i = 0; i < size; i++) {
-                for (var j = 0; j < size; j++) {
-                grid[i][j] = randomNum = Math.floor(2 * Math.random()) + 0; //fills with either a 1 or a zero
-                }
-            }
-            displayGrid(grid);
-        }
-        
-
-
-
-
-        function checkNorth(r, c){
-            let i;
-            let j;
-            if(r <= 0){
-                i = size - 1;
-            }else{
-                i = r - 1;
-            }
-            j = c;
-
-            return (((grid[i][j])==1)? 1 : 0);
-        }
-
-        function checkSouth(r,c){
-            let i;
-            let j;
-            if(r >= (size-1)){
-                i = 0;
-            }else{
-                i = r + 1;
-            }
-             j = c;
-
-            return (((grid[i][j])==1)? 1 : 0);
-        }
-
-        function checkEast(r,c){
-            let i;
-            let j;
-            if (c >= (size-1)){
-                j = 0;
-            }else{
-                j = c + 1;
-            }
-            i = r;
-
-            return (((grid[i][j])==1)? 1 : 0);
-        }
-
-        function checkWest(r,c){
-            let i;
-            let j;
-            if (c <= 0) {
-                j = size - 1;
-            }else{
-                j = c - 1;
-            }
-            i = r;
-
-            return (((grid[i][j])==1)? 1 : 0);
-
-        }
-
-
-        function checkNorthWest(r,c){
-            let i;
-            let j;
-            if (r <= 0){
-                i = size - 1;
-            }else{
-                i = r - 1;
-            }
-
-            if(c <= 0){
-                j = size - 1;
-            }else{
-                j = c - 1;
-            }
-
-            return (((grid[i][j])==1)? 1 : 0);
-        }
-
-        function checkNorthEast(r, c){
-            let i;
-            let j;
-            if (r<= 0) {
-                i = size - 1;
-            } else {
-                i = r - 1;
-            }
-
-            if (c >= (size-1)){
-                j = 0;
-            }else{
-                j = c + 1;
-            }
-
-            return (((grid[i][j])==1)? 1 : 0);
-        }
-
-        function checkSouthWest(r, c){
-            let i;
-            let j;
-            if(r >= (size - 1)){
-                i = 0;
-            }else{
-                i = r + 1;
-            }
-
-            if (c <= 0){
-                j = size - 1;
-            }else{
-                j = c - 1;
-            }
-
-            return (((grid[i][j])==1)? 1 : 0);
-        }
-
-        function checkSouthEast(r, c){
-            let i;
-            let j;
-            if(r >= (size - 1)){
-                i = 0;
-            }else{
-                i = r + 1;
-            }
-
-            if (c >= (size-1)){
-                j = 0;
-            }else{
-                j = c + 1;
-            }
-
-            return (((grid[i][j])==1)? 1 : 0);
-        }
-
-
-
-
-        function checkNeighbors(r, c){
-            /*
-            console.log(checkNorth(r, c) + ' North');
-            console.log(checkSouth(r, c) + ' South');
-            console.log(checkEast(r, c) + ' East');
-            console.log(checkWest(r, c) + ' West');
-            console.log(checkNorthWest(r, c) + ' NorthWest');
-            console.log(checkNorthEast(r, c) + ' NorthEast');
-            console.log(checkSouthWest(r, c) + ' SouthWest');
-            console.log(checkSouthEast(r, c) + ' SouthEast');
-            */
-           let liveNeighbors = 0;
-        
-           if(checkNorth(r, c) == 1){
-               liveNeighbors++;
-           }
-           if(checkSouth(r, c) == 1){
-               liveNeighbors++;
-           }
-           if (checkEast(r, c) == 1){
-               liveNeighbors++;
-           }
-           if (checkWest(r, c) == 1){
-               liveNeighbors++;
-           }
-           if (checkNorthWest(r, c) == 1){
-               liveNeighbors++;
-           }
-           if (checkNorthEast(r, c) == 1){
-               liveNeighbors++;
-           }
-           if (checkSouthWest(r, c) == 1){
-               liveNeighbors++;
-           }
-           if (checkSouthEast(r, c) == 1){
-               liveNeighbors++;
-           }
-
-           return liveNeighbors;
-        }
-
-
-        function updateCell(r,c){
-            let numLive = checkNeighbors(r,c);
-            if (grid[r][c] == 1){
-                if(numLive < 2){
-                    return 0;
-                }
-                if(numLive > 3){
-                    return 0;
-                }else{
-                    return 1;
-                }
-            }
-
-            if (grid[r][c] == 0){
-                if(numLive == 3){
-                    return 1;
-                }else{
-                    return 0;
-                }
-            }
-
-        }
-
-
-        function updateBoard(){
-            var newGrid = new Array(size);
-            for (var i = 0; i < newGrid.length; i++) {
-                newGrid[i] = new Array();
-            }
-            for (var i = 0; i < size; i++) {
-                for (var j = 0; j < size; j++) {
-                newGrid[i][j] = updateCell(i, j);
-                }
-            }
-            grid = newGrid;
-            displayGrid(grid)
-
-        }
-    
-
-
-
-        function displayGrid(grd){
-            var html = "<table>";
-            for (let r = 0; r < grd.length; r++){
-                html+= "<tr>";
-                for (let c = 0; c < grd[r].length; c++){
-                    let cell = "<td id = \"";
-                    cell += "R"+r+"c"+c; // creates id
-                    let color = (grd[r][c] == 1)?'black':'white'; 
-                    cell += "\" style=\"background-color:"+color;
-                    cell += "; color:white\">&nbsp&nbsp&nbsp&nbsp"//blank space;
-                    cell+= "</td>";
-                    html += cell;
-                }
-            }
-            html += "</table>";
-            document.getElementById("results").innerHTML = html;
-
-        }
-
-        function start(){
-            interval = setInterval(updateBoard, 50);
-        }
-
-
-        function stop(){
-            clearInterval(interval);
-        }
-
-    </script>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="script.js"></script>
   </head>
 
 
 
-  <body onload="generateRandomSeed()">
-    <h1>Conways Game of Life</h1>
-    <button onclick="start()">START</button>
-    <button onclick="stop()">STOP</button>
-    <DIV id="results"></DIV>
+  <body style="background-color:#b8c3cc;">
+    <div class="center">
+            <h1>Conways Game of Life</h1>
+            <h3>By Christopher Eelman</h3>
+            <div>
+            The Game of Life, also known simply as Life, is a cellular automaton devised
+            by the British mathematician John Horton Conway in 1970.
+            This implementation has overlapping borders and comes with pre-set patterns, the ability to toggle rainbow mode, 
+            and a random seed generator (live cells have a 30% chance of generation).
+            </div>
+
+        <div class="slidecontainerSpeed">
+            Speed of simulation:
+            <input type="range" min="50" max="1000" value="250" class="slider" id="speedRange" 
+            onchange="updateInterval()">
+            <span id = "speedResult" >250ms</span>
+        </div>
+
+
+        <div class="slidecontainerSize">
+            Size of Random Seed:
+            <input type="range" min="3" max="45" value="20" class="slider" id="sizeRange"
+            onchange="document.getElementById('sizeResult').innerHTML = this.value + ' by ' + this.value" >
+            <span id = "sizeResult">20 by 20</span>
+        </div>
+
+
+
+        <button id = "randomSeedButton" class = "randomSeed" onclick="generateRandomSeed()">Random Seed</button>
+        <button id = "gliderButton" class = "glider" onclick="glider()">Glider</button>
+        <button id = "spaceShipButton" class = "glider" onclick="spaceship()">Spaceship</button>
+        <button id = "loaferButton" class = "glider" onclick="loafer()">Loafer</button>
+        <button id = "pulsarButton" class ="pulsar" onclick="pulsar()">Pulsar</button>
+        <button id = "rainbowToggle" onclick="toggleRainbow()" hidden>Rainbow OFF</button>
+        <br>
+        <div>
+            <button id = "startButton" class = "startButton" onclick="start()" hidden>S T A R T</button>
+            <button id = "stopButton" class = "stopButton" onclick="stop()" hidden>S T O P</button>
+            <span id = "roundNumber"></span>
+        </div>
+        <span id="results"></span>
+        <div> </div>
+        <div> </div>
+    </div>
 
 
     
